@@ -16,23 +16,24 @@ public class Main {
 		while(!ejecutarse) {
 			System.out.println("======= MENÚ DE REPRODUCCIÓN ======");
 			System.out.println("Seleccione una de las siguientes opciones: ");
-			System.out.println("1. Agregar canción. \n2. Eliminar canción. \n3. Reproducir canción anterior. "
-					+ "\n4. Reproducir siguiente canción. \n5. Ver canción actual. \n6. Ver historial. \n8. Salir.");
+			System.out.println("1. Agregar canción.\n2. Eliminar canción.\n3. Reproducir canción anterior. "
+					+ "\n4. Reproducir siguiente canción.\n5. Ver canción actual.\n6. Ver historial.\n7. "
+					+ "Borrar historial.\n8. Ver canción siguiente en la cola.\n9. Ver cola de reproducción.\n10. Salir.");
 			int opciones = in.nextInt();
 			switch(opciones) {
 				case 1: 
 					{
-						System.out.println("Nombre canción: " );
+						System.out.println("Título de la canción: " );
 						in.nextLine();
 						String nombre = in.nextLine();
-						System.out.println("Nombre autor: " );
+						System.out.println("Autor: " );
 						String autor = in.nextLine();
 						playList.agregar(nombre, autor);
 					}
 					break;
 				case 2: 
 					{
-						System.out.println("Nombre de la canción: ");
+						System.out.println("Título de la canción: ");
 						in.nextLine();
 						String autor = "";
 						String titulo = in.nextLine();
@@ -64,7 +65,17 @@ public class Main {
 						playList.limpiarHistorial();
 					}
 					break;
-				case 8: 
+				case 8:
+					{
+						playList.verSiguienteCancion();
+					}
+					break;
+				case 9: 
+					{
+						playList.verColaReproduccion();
+					}
+					break;
+				case 10: 
 					{
 						System.out.println("Saliendo del programa...");
 						ejecutarse = true;

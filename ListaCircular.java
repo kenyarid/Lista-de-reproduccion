@@ -1,10 +1,11 @@
 package listareproduccion;
 
 public class ListaCircular {
-    private NodoListaCircular cabeza = null;
+	private NodoListaCircular cabeza = null;
     private NodoListaCircular cola = null;
     private NodoListaCircular actual = null;
-    private PilaHistorial historial = new PilaHistorial(); // Conexión con la pila
+    private PilaHistorial historial = new PilaHistorial(); // conexión con la pila
+    private ColaReproduccion colaReproduccion = new ColaReproduccion(); // conexión con la cola
 
     public void agregar(String titulo, String autor) {
         Cancion nuevaCancion = new Cancion(titulo, autor);
@@ -16,7 +17,7 @@ public class ListaCircular {
             nuevoNodo.siguiente = cabeza;
             nuevoNodo.anterior = cola;
             actual = cabeza;
-            historial.push(actual.cancion); // Se registra la primera canción en el historial
+            historial.push(actual.cancion);
         } else {
             cola.siguiente = nuevoNodo;
             nuevoNodo.anterior = cola;
@@ -24,7 +25,9 @@ public class ListaCircular {
             cola.siguiente = cabeza;
             cabeza.anterior = cola;
         }
+        colaReproduccion.encolar(nuevaCancion);
     }
+    
 
     public void anteriorCancion() {
         if (actual == null) {
@@ -44,6 +47,11 @@ public class ListaCircular {
         actual = actual.siguiente;
         System.out.println("Reproduciendo: " + actual.cancion);
         historial.push(actual.cancion); // Guarda en historial
+
+        // para poder sacar la canción que estaba al frente de la cola (si es q hay elementos)
+        if (!colaReproduccion.isEmpty()) {
+            colaReproduccion.desencolar();
+        }
     }
 
     public void mostrar() {
@@ -120,5 +128,27 @@ public class ListaCircular {
 
     public void limpiarHistorial() {
         historial.clear();
+    }
+    
+ // MÉTODOS CONECTADOS A LA COLAAA!!!!!!!!
+    
+    public void verColaReproduccion() {
+        colaReproduccion.mostrar();
+    }
+
+    public ColaReproduccion getColaReproduccion() {
+        return colaReproduccion;
+    }
+    
+    public void verSiguienteCancion() {
+        if (actual == null) {
+            System.out.println("La playlist está vacía.");
+            return;
+        }
+        if (actual.siguiente == null) {
+            System.out.println("No hay una canción siguiente definida.");
+            return;
+        }
+        System.out.println("Siguiente canción: " + actual.siguiente.cancion);
     }
 }
